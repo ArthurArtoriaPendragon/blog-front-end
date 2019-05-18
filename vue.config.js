@@ -1,7 +1,7 @@
 module.exports = {
   css: undefined,
   lintOnSave: undefined,
-  publicPath: '/',
+  publicPath: '/blog-front-end/',
   outputDir: 'docs',
   assetsDir: undefined,
   runtimeCompiler: true,

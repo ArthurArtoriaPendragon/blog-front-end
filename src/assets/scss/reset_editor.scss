@@ -1,0 +1,14 @@
+.v-note {
+  &-wrapper {
+    z-index: 10 !important;
+  }
+  &-show {
+    .v-show {
+      &-content {
+        .hljs {
+          border-radius: 3px;
+        }
+      }
+    }
+  }
+}

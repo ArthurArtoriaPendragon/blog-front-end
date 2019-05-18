@@ -7,7 +7,7 @@ set -e
 npm run build
 
 # 切换到 gh-pages分支
-git checkout -b gh-pages
+git checkout gh-pages
 git add -f dist
 git commit -m 'create project'
 git subtree push --prefix dist origin gh-pages

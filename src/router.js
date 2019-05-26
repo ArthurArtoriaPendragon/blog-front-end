@@ -17,7 +17,7 @@ export default new Router({
       beforeEnter: (to, from, next) => {
         const token = localStorage.getItem('token');
         if (!token) {
-          location.href = 'http://localhost:8080';
+          location.href = process.env.BASE_URL;
         } else {
           next();
         }

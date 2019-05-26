@@ -1,70 +1,57 @@
 <template>
-  <v-dialog
-    content-class="login"
-    v-model="isShowFrom"
-    scrollable
-    :overlay="false"
-    max-width="500px"
-    transition="dialog-transition"
-  >
-    <v-card class="login-card">
-      <v-card-title>
-        <span class="headline">{{ cardTitle }}</span>
-      </v-card-title>
-      <v-card-text>
-        <v-form class="login-form" ref="form" lazy-validation>
-          <v-container grid-list-md>
-            <v-layout wrap>
-              <v-flex
-                xs12
-                v-for="(item, index) in form[activeForm]"
-                :key="index"
-              >
-                <v-text-field
-                  :label="item.label"
-                  :rules="item.rules"
-                  v-model="item.value"
-                  :required="item.required"
-                  :type="item.password ? 'password' : 'text'"
-                ></v-text-field>
-              </v-flex>
-            </v-layout>
-            <v-layout row justify-end>
-              <small>*表示必填字段</small>
-            </v-layout>
-            <v-layout row justify-center>
-              <v-btn
-                dark
-                :loading="isShowLoading"
-                :disabled="isShowLoading"
-                @click="validate"
-                color="blue darken-1"
-                class="login-form__submit"
-                >{{ cardTitle }}
-                <template v-slot:loader>
-                  <span>Loading...</span>
-                </template>
-              </v-btn>
-            </v-layout>
-          </v-container>
-        </v-form>
-      </v-card-text>
-      <v-card-actions>
-        <v-layout class="login-card__tip" row justify-center align-center>
-          <span class="span">{{ jumpText.span }}有账号？</span>
-          <v-btn
-            @click="switchFormType"
-            class="login-card__jump"
-            flat
-            small
-            color="blue darken-1"
-          >
-            <strong>立即{{ jumpText.btn }}</strong>
-          </v-btn>
-        </v-layout>
-      </v-card-actions>
-    </v-card>
-  </v-dialog>
+  <v-card id="loginCard" class="login-card">
+    <v-card-title>
+      <span class="headline">{{ cardTitle }}</span>
+    </v-card-title>
+    <v-card-text>
+      <v-form class="login-form" ref="form" lazy-validation>
+        <v-container grid-list-md>
+          <v-layout wrap>
+            <v-flex xs12 v-for="(item, index) in form[activeForm]" :key="index">
+              <v-text-field
+                :label="item.label"
+                :rules="item.rules"
+                v-model="item.value"
+                :required="item.required"
+                :type="item.password ? 'password' : 'text'"
+              ></v-text-field>
+            </v-flex>
+          </v-layout>
+          <v-layout row justify-end>
+            <small>*表示必填字段</small>
+          </v-layout>
+          <v-layout row justify-center>
+            <v-btn
+              dark
+              :loading="isShowLoading"
+              :disabled="isShowLoading"
+              @click="validate"
+              color="blue darken-1"
+              class="login-form__submit"
+              >{{ cardTitle }}
+              <template v-slot:loader>
+                <span>Loading...</span>
+              </template>
+            </v-btn>
+          </v-layout>
+        </v-container>
+      </v-form>
+    </v-card-text>
+    <v-card-actions>
+      <v-layout class="login-card__tip" row justify-center align-center>
+        <span class="span">{{ jumpText.span }}有账号？</span>
+        <v-btn
+          @click="switchFormType"
+          class="login-card__jump"
+          flat
+          small
+          color="blue darken-1"
+        >
+          <strong>立即{{ jumpText.btn }}</strong>
+        </v-btn>
+      </v-layout>
+    </v-card-actions>
+  </v-card>
 </template>
 
 <script>
@@ -133,7 +120,6 @@ export default {
         }
       },
       activeForm: 'login',
-      isShowFrom: false, //控制表单显示
       isShowLoading: false //控制提交按钮的loading显示
     };
   },
@@ -142,17 +128,14 @@ export default {
     isShowLogin: {
       type: Boolean,
       default: true
+    },
+    isReject: {
+      type: Boolean,
+      default: false
     }
   },
 
-  watch: {
-    isShowLogin() {
-      this.isShowFrom = this.isShowLogin;
-    },
-    isShowFrom() {
-      !this.isShowFrom && this.$emit('closeLogin');
-    }
-  },
+  watch: {},
 
   computed: {
     cardTitle() {
@@ -190,7 +173,7 @@ export default {
           res => {
             const data = res.data;
             if (data.code === 200) {
-              this.$message('登陆成功！', 'success');
+              // this.$message('登陆成功！', 'success');
               this.formatUserInfo(data.data);
             } else {
               this.$message(data.message, 'error');
@@ -210,7 +193,10 @@ export default {
       this.setToken(data.token);
       this.setUserInfo(data);
       localStorage.setItem('token', data.token);
-      localStorage.setItem('token', JSON.stringify(data));
+      localStorage.setItem('userInfo', JSON.stringify(data));
+      if (this.isReject) {
+        this.$router.push(this.$route.query.reject_url);
+      }
     },
 
     /**
@@ -261,14 +247,12 @@ export default {
 </script>
 
 <style lang="scss">
-.login {
-  &-card {
-    &__jump {
-      margin: 0;
-    }
-  }
-  &-form {
-    &__submit {
+#loginCard {
+  .login {
+    &-card {
+      &__jump {
+        margin: 0;
+      }
     }
   }
 }

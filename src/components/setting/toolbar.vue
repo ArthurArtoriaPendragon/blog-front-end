@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import login from '../login/login.vue';
+import login from '../login/login_dialog.vue';
 import { mapMutations } from 'vuex';
 
 export default {

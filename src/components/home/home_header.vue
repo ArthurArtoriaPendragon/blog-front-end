@@ -53,6 +53,10 @@ export default {
             }
           },
           label: 'Detail'
+        },
+        {
+          path: '/setting',
+          label: '管理'
         }
       ],
       scrollHeight: 0

@@ -3,7 +3,7 @@
     <v-toolbar-side-icon
       @click.stop="$emit(`handleAside`)"
     ></v-toolbar-side-icon>
-    <v-toolbar-title>Home</v-toolbar-title>
+    <v-toolbar-title :to="'/'">Home</v-toolbar-title>
     <v-spacer></v-spacer>
     <v-btn @click="isShowLogin = true" icon color="indigo">
       <v-icon>account_circle</v-icon>

@@ -59,19 +59,12 @@ export default {
      * @param {Number} id 博客id
      */
     getBlogById(id) {
-      this.$http.get(`${api.blog.detail}/${id}`).then(
-        res => {
-          const data = res.data;
-          if (data.code === 200) {
-            this.blog = Object.assign({}, this.blog, data.data);
-          } else {
-            this.$message(res.data.message);
-          }
-        },
-        err => {
-          this.$message(err.message);
+      this.$http.get(`${api.blog.detail}/${id}`).then(res => {
+        const { data, code } = res.data;
+        if (code === 200) {
+          this.blog = Object.assign({}, this.blog, data);
         }
-      );
+      });
     },
 
     /**

@@ -9,7 +9,7 @@ import 'mavon-editor/dist/css/index.css';
 import '@/assets/scss/reset_editor.scss';
 import Vuetify from 'vuetify';
 import 'vuetify/dist/vuetify.min.css';
-import axios from 'axios';
+import axios from './assets/js/axios';
 // import theme from './plugins/theme';
 import message from './components/$message/main';
 import '@mdi/font/css/materialdesignicons.css';

@@ -27,6 +27,10 @@ export default {
     token() {
       return this.$store.state.token;
     }
+  },
+
+  methods: {
+    noToken() {}
   }
 };
 </script>

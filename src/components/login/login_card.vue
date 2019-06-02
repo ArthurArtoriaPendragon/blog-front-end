@@ -195,7 +195,9 @@ export default {
       localStorage.setItem('token', data.token);
       localStorage.setItem('userInfo', JSON.stringify(data));
       if (this.isReject) {
-        this.$router.push(this.$route.query.reject_url);
+        setTimeout(() => {
+          this.$router.push(this.$route.query.reject_url);
+        }, 1000);
       }
     },
 
@@ -215,11 +217,9 @@ export default {
         .then(
           res => {
             const data = res.data;
-            if (data.code === 1) {
-              this.$message('注册成功！', 'success');
+            if (data.code === 200) {
+              this.$message.success('注册成功！', 1000);
               this.formatUserInfo(data.data);
-            } else {
-              this.$message(data.message);
             }
           },
           err => {

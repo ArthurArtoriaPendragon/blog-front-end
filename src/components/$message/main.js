@@ -30,7 +30,13 @@ function getMessageInstance() {
   return messageInstance;
 }
 
-function notice(content, type, duration) {
+/**
+ * 对外暴露的显示消息的方法
+ * @param {String} content 消息内容
+ * @param {String} type 消息类型
+ * @param {Number} duration 持续时间
+ */
+function notice(content, type = 'error', duration = 2000) {
   const instance = getMessageInstance();
   instance.add({
     content,

@@ -29,9 +29,9 @@ Axios.interceptors.response.use(
     }
     return res;
   },
-  err => {
-    const code = err.data.code;
-    console.log(code);
+  error => {
+    message(error.response.data.message);
+    return Promise.reject(error);
   }
 );
 

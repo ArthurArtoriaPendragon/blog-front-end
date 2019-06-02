@@ -68,8 +68,6 @@ export default {
               );
               return blog;
             });
-          } else {
-            this.$message(res.data.message);
           }
         },
         err => {

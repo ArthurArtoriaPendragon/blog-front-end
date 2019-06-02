@@ -32,14 +32,7 @@ function getUuid() {
 export default {
   data() {
     return {
-      noticeList: [],
-      show: true,
-      content: '网络错误，请刷新重试！',
-      type: 'error',
-      duration: 0,
-      x: '',
-      y: 'top',
-      mode: ''
+      noticeList: []
     };
   },
 
@@ -59,7 +52,6 @@ export default {
           name,
           content: '网络错误，请刷新重试！',
           type: 'error',
-          duration: 1000,
           x: '',
           y: 'top',
           mode: '',

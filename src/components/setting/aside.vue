@@ -70,6 +70,7 @@ export default {
   watch: {
     $route(to) {
       if (to.path.includes('update')) {
+        console.log(to);
         this.asideList[2].path.params = to.params.id;
       }
     }

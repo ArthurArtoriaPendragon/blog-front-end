@@ -1,28 +1,78 @@
 import Vue from 'vue'; // 引入 Vue 是因为要用到 Vue.extend() 这个方法
-import message from './message.vue';
+import Message from './message.vue';
 
-let ToastConstructor = Vue.extend(message); // 这个在前面的前置知识内容里面有讲到
-let instance;
+Message.newInstance = (props = {}) => {
+  const Instance = new Vue({
+    data: props,
+    render(h) {
+      return h(Message, {
+        props
+      });
+    }
+  });
 
-const Message = function(data) {
-  instance = new ToastConstructor({
-    data
-  }); // 渲染组件
-  document.querySelector('#app').appendChild(instance.$mount().$el); // 挂载到 body 下
+  const component = Instance.$mount();
+  document.body.appendChild(component.$el);
+
+  // 通过闭包维护组件的调用
+  const message = Instance.$children[0];
+  return {
+    add(noticeProps) {
+      message.add(noticeProps);
+    }
+  };
 };
 
-const $message = function(content, type = 'error', duration = 3000) {
-  return Message({
+// 提示单例
+let messageInstance;
+function getMessageInstance() {
+  messageInstance = messageInstance || Message.newInstance();
+  return messageInstance;
+}
+
+function notice(content, type, duration) {
+  const instance = getMessageInstance();
+  instance.add({
     content,
     type,
     duration
   });
-};
+}
 
+/**
+ * * 添加颜色属性调用
+ */
 ['error', 'success', 'info', 'warning'].forEach(type => {
-  $message[type] = content => {
-    return Message(content, type);
+  notice[type] = (content, duration) => {
+    notice(content, type, duration);
   };
 });
 
-export default $message;
+// 对外暴露的方法
+export default notice;
+
+// let ToastConstructor = Vue.extend(message);
+// let instance;
+
+// const Message = function(data) {
+//   instance = new ToastConstructor({
+//     data
+//   }); // 渲染组件
+//   document.querySelector('#app').appendChild(instance.$mount().$el); // 挂载到 body 下
+// };
+
+// const $message = function(content, type = 'error', duration = 3000) {
+//   return Message({
+//     content,
+//     type,
+//     duration
+//   });
+// };
+
+// ['error', 'success', 'info', 'warning'].forEach(type => {
+//   $message[type] = content => {
+//     return Message(content, type);
+//   };
+// });
+
+// export default $message;

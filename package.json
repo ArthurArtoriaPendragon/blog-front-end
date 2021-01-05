@@ -11,7 +11,7 @@
     "myDeploy": "myDeploy.sh"
   },
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "dayjs": "^1.8.14",
     "mavon-editor": "^2.7.1",
     "typeface-roboto": "^0.0.54",
